@@ -97,7 +97,7 @@ def tags_delete(tag_id):
     ).scalars().first()
 
     if tag:
-        # ลบความสัมพันธ์ในตาราง note_tag ก่อน
+      
         notes = db.session.execute(
             db.select(models.Note).where(models.Note.tags.any(id=tag_id))
         ).scalars().all()
@@ -105,7 +105,6 @@ def tags_delete(tag_id):
         for note in notes:
             note.tags.remove(tag)
 
-        # จากนั้นจึงลบแท็ก
         db.session.delete(tag)
         db.session.commit()
 
